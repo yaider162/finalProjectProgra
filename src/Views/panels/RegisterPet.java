@@ -1,12 +1,9 @@
 package Views.panels;
 
 import Models.GLOBALS;
-import Models.Vaccine;
-import Models.Vet;
 import Presenter.Presenter;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
@@ -75,7 +72,6 @@ public class RegisterPet extends JPanel {
         constraints.gridx = 1;
         this.add(petRaze, constraints);
     }
-
     private void initPrincipalResponsible(GridBagConstraints constraints) throws IOException, FontFormatException {
         constraints.gridx = 0;
         constraints.gridy = 3;
