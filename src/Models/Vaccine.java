@@ -15,4 +15,8 @@ public class Vaccine {
     public String getName() {
         return type;
     }
+
+    public String getDeadLine() {
+        return deadLine.toString();
+    }
 }

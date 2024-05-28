@@ -1,6 +1,8 @@
 package Views.panels;
 
 import Models.GLOBALS;
+import Views.MainPage;
+import com.sun.tools.javac.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,10 +11,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Body extends JPanel {
-    public Body() throws IOException, FontFormatException {
-        initComponents();
+    public Body(MainPage frame) throws IOException, FontFormatException {
+        initComponents(frame);
     }
-    private void initComponents() throws IOException, FontFormatException {
+    private void initComponents(MainPage frame) throws IOException, FontFormatException {
         this.setLayout(new GridBagLayout());
         this.setBackground(GLOBALS.MainColor);
         GridBagConstraints constraints= new GridBagConstraints();
@@ -21,8 +23,17 @@ public class Body extends JPanel {
         constraints.weighty = 1;
         this.add(image(), constraints); //añado imagen
         constraints.gridy = 1;
-        this.add(new Button("Registrar mascota", GLOBALS.normalButtonSize), constraints); // añado el button
-
+        Button button = new Button("Registrar cita");
+        this.add(button, constraints); // añado el button
+        button.addActionListener(e -> {
+            try {
+                frame.getContentPane().removeAll();
+                frame.addNewPanel(new Header(frame), BorderLayout.NORTH);
+                frame.addNewPanel(new Appointments(frame), BorderLayout.CENTER);
+            } catch (IOException | FontFormatException ioException) {
+                ioException.printStackTrace();
+            }
+        });
         // Está organizado con un GridBagLayout, que es un layout que permite organizar los componentes en una cuadrícula.
     }
     private JLabel image(){

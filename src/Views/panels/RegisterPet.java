@@ -1,11 +1,14 @@
 package Views.panels;
 
 import Models.GLOBALS;
+import Models.Vaccine;
 import Presenter.Presenter;
+import Views.MainPage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class RegisterPet extends JPanel {
@@ -13,17 +16,18 @@ public class RegisterPet extends JPanel {
     private JComboBox<String> getPetType;
     private JComboBox<String> petRaze;
     private JTextField PrincipalResponsible;
+    private JTextField id;
     public JList<String> vaccines;
 
     public String[] razesDogs = {"Labrador Retriever", "Pastor Alemán", "Golden Retriever", "Bulldog Francés", "Bulldog", "Beagle", "Poodle", "Rottweiler", "Yorkshire Terrier", "Boxer"};
     public String[] razesCats = {"Siamés","Persa","Main", "Ragdoll", "Bengala", "Siberiano", "Sphynx", "British Shorthair", "Scottish Fold", "Munchkin"};
 
     public Presenter presenter = new Presenter();
-    public RegisterPet() throws IOException, FontFormatException {
-        initComponents();
-    }
 
-    private void initComponents() throws IOException, FontFormatException {
+    public RegisterPet(MainPage frame) throws IOException, FontFormatException {
+        initComponents(frame);
+    }
+    private void initComponents(MainPage frame) throws IOException, FontFormatException {
         this.setLayout(new GridBagLayout());
         this.setBackground(GLOBALS.MainColor);
         GridBagConstraints constraints = new GridBagConstraints();
@@ -33,22 +37,23 @@ public class RegisterPet extends JPanel {
         initPetRaze(constraints);
         initPrincipalResponsible(constraints);
         initVaccines(constraints);
-        initRegisterButton(constraints);
+        initRegisterButton(constraints,frame);
     }
-
     private void initPetName(GridBagConstraints constraints) throws IOException, FontFormatException {
         constraints.gridx = 0;
         constraints.gridy = 0;
         inputText petNameLabel = new inputText("Nombre de la mascota");
+        constraints.insets = new Insets(20, 0, 0, 20); // Aumenta el espacio superior a 20 píxeles
         this.add(petNameLabel, constraints);
         petName = new JTextField(20);
         constraints.gridx = 1;
         this.add(petName, constraints);
     }
-
     private void initPetType(GridBagConstraints constraints) throws IOException, FontFormatException {
         constraints.weighty =0.5;
         constraints.fill = GridBagConstraints.HORIZONTAL;
+
+        constraints.insets = new Insets(0, 0, 0, 20); // Aumenta el espacio superior a 20 píxeles
 
         constraints.gridx = 0;
         constraints.gridy = 1;
@@ -58,7 +63,6 @@ public class RegisterPet extends JPanel {
         constraints.gridx = 1;
         this.add(getPetType, constraints);
     }
-
     private void initPetRaze(GridBagConstraints constraints) throws IOException, FontFormatException {
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -75,27 +79,46 @@ public class RegisterPet extends JPanel {
     private void initPrincipalResponsible(GridBagConstraints constraints) throws IOException, FontFormatException {
         constraints.gridx = 0;
         constraints.gridy = 3;
-        inputText PrincipalResponsibleLabel = new inputText("Responsable principal");
+        inputText PrincipalResponsibleLabel = new inputText("Nombre de responsable principal");
         this.add(PrincipalResponsibleLabel, constraints);
         PrincipalResponsible = new JTextField(20);
         constraints.gridx = 1;
         this.add(PrincipalResponsible, constraints);
-    }
 
-    private void initVaccines(GridBagConstraints constraints) throws IOException, FontFormatException {
         constraints.gridx = 0;
         constraints.gridy = 4;
+        inputText responsibleId = new inputText("Cédula del responsable");
+        this.add(responsibleId, constraints);
+        id = new JTextField(20);
+        constraints.gridx = 1;
+        this.add(id, constraints);
+    }
+    private void initVaccines(GridBagConstraints constraints) throws IOException, FontFormatException {
+        constraints.gridx = 0;
+        constraints.gridy = 5;
         inputText vaccinesLabel = new inputText("Vacunas");
         this.add(vaccinesLabel, constraints);
-        vaccines = new JList<>(presenter.getVaccines().toArray(new String[0]));
+        vaccines = new JList<>(presenter.getVaccinesName().toArray(new String[0]));
         constraints.gridx = 1;
         this.add(vaccines, constraints);
     }
-
-    private void initRegisterButton(GridBagConstraints constraints) throws IOException, FontFormatException {
+    private void initRegisterButton(GridBagConstraints constraints, MainPage frame) throws IOException, FontFormatException {
         constraints.gridx = 0;
-        constraints.gridy = 5;
+        constraints.gridy = 6;
         constraints.gridwidth = 2;
-        this.add(new Button("Registrar", GLOBALS.normalButtonSize), constraints);
+        Button registerButton = new Button("Registrar");
+        registerButton.addActionListener(e -> {
+            ArrayList<Vaccine> vaccines = presenter.getVaccines();
+            vaccines.removeIf(vaccine -> !this.vaccines.getSelectedValuesList().contains(vaccine.getName()));
+            presenter.registerPet(petName.getText(), (String) getPetType.getSelectedItem(), (String) petRaze.getSelectedItem(), PrincipalResponsible.getText(), id.getText(), vaccines);
+            frame.getContentPane().removeAll();
+            try {
+                frame.addNewPanel(new Header(frame), BorderLayout.NORTH);
+                frame.addNewPanel(new Body(frame), BorderLayout.CENTER);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        this.add(registerButton, constraints);
     }
 }

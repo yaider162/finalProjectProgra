@@ -72,7 +72,7 @@ public class RegisterVaccine extends JPanel {
             frame.getContentPane().removeAll();
             try {
                 frame.addNewPanel(new Header(frame), BorderLayout.NORTH);
-                frame.addNewPanel(new Body(), BorderLayout.CENTER);
+                frame.addNewPanel(new Body(frame), BorderLayout.CENTER);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

@@ -15,7 +15,7 @@ public class MainPage extends JFrame {
     private void initComponents() throws IOException, FontFormatException {
         initBasic();
         this.add(new Views.panels.Header(this), BorderLayout.NORTH);
-        this.add(new Views.panels.Body(), BorderLayout.CENTER);
+        this.add(new Views.panels.Body(this), BorderLayout.CENTER);
     }
 
     public void addNewPanel(JPanel panel, String position){

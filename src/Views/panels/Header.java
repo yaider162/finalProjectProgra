@@ -30,7 +30,7 @@ public class Header extends JPanel{
                         frame.addNewPanel(new Header(frame), BorderLayout.NORTH);
                         switch (text) {
                             case "Registrar Mascota":
-                                frame.addNewPanel(new Views.panels.RegisterPet(), BorderLayout.CENTER);
+                                frame.addNewPanel(new Views.panels.RegisterPet(frame), BorderLayout.CENTER);
                                 break;
                             case "Registrar Vacuna":
                                 frame.addNewPanel(new Views.panels.RegisterVaccine(frame), BorderLayout.CENTER);
@@ -39,13 +39,13 @@ public class Header extends JPanel{
                                 frame.addNewPanel(new Views.panels.ConsultVaccine(), BorderLayout.CENTER);
                                 break;
                             case "Citas":
-                                frame.addNewPanel(new Views.panels.Appointments(), BorderLayout.CENTER);
+                                frame.addNewPanel(new Views.panels.Appointments(frame), BorderLayout.CENTER);
                                 break;
                             case "Consultar Mascota":
                                 frame.addNewPanel(new Views.panels.ConsultPet(), BorderLayout.CENTER);
                                 break;
                             case "Principal":
-                                frame.addNewPanel(new Views.panels.Body(), BorderLayout.CENTER);
+                                frame.addNewPanel(new Views.panels.Body(frame), BorderLayout.CENTER);
                                 break;
                         }
                     } catch (Exception ex) {
