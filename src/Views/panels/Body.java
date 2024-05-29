@@ -1,8 +1,8 @@
 package Views.panels;
 
 import Models.GLOBALS;
+import Presenter.Presenter;
 import Views.MainPage;
-import com.sun.tools.javac.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Body extends JPanel {
-    public Body(MainPage frame) throws IOException, FontFormatException {
-        initComponents(frame);
+    public Body(MainPage frame, Presenter presenter) throws IOException, FontFormatException {
+        initComponents(frame, presenter);
     }
-    private void initComponents(MainPage frame) throws IOException, FontFormatException {
+    private void initComponents(MainPage frame, Presenter presenter) throws IOException, FontFormatException {
         this.setLayout(new GridBagLayout());
         this.setBackground(GLOBALS.MainColor);
         GridBagConstraints constraints= new GridBagConstraints();
@@ -28,8 +28,8 @@ public class Body extends JPanel {
         button.addActionListener(e -> {
             try {
                 frame.getContentPane().removeAll();
-                frame.addNewPanel(new Header(frame), BorderLayout.NORTH);
-                frame.addNewPanel(new Appointments(frame), BorderLayout.CENTER);
+                frame.addNewPanel(new Header(frame,presenter), BorderLayout.NORTH);
+                frame.addNewPanel(new NewAppointment(frame,presenter), BorderLayout.CENTER);
             } catch (IOException | FontFormatException ioException) {
                 ioException.printStackTrace();
             }

@@ -1,5 +1,6 @@
 package Views.panels;
 
+import Presenter.Presenter;
 import Views.MainPage;
 
 import javax.swing.*;
@@ -12,12 +13,12 @@ public class Header extends JPanel{
 
     private MainPage frame;
 
-    public Header(MainPage frame) throws IOException, FontFormatException {
+    public Header(MainPage frame, Presenter presenter) throws IOException, FontFormatException {
         this.frame = frame;
-        initComponents();
+        initComponents(presenter);
     }
 
-    private void initComponents() throws IOException, FontFormatException {
+    private void initComponents(Presenter presenter) throws IOException, FontFormatException {
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 15));
         this.setBackground(Models.GLOBALS.BEIGE);
         for (String text : Models.GLOBALS.headerButtonsText) {
@@ -27,25 +28,19 @@ public class Header extends JPanel{
                 public void actionPerformed(ActionEvent e) {
                     frame.getContentPane().removeAll();
                     try {
-                        frame.addNewPanel(new Header(frame), BorderLayout.NORTH);
+                        frame.addNewPanel(new Header(frame, presenter), BorderLayout.NORTH);
                         switch (text) {
-                            case "Registrar Mascota":
-                                frame.addNewPanel(new Views.panels.RegisterPet(frame), BorderLayout.CENTER);
+                            case "Lista de citas":
+                                frame.addNewPanel(new Views.panels.AppointmentsList(frame,presenter), BorderLayout.CENTER);
                                 break;
-                            case "Registrar Vacuna":
-                                frame.addNewPanel(new Views.panels.RegisterVaccine(frame), BorderLayout.CENTER);
+                            case "Lista de vacunas":
+                                frame.addNewPanel(new Views.panels.VaccinesList(frame, presenter), BorderLayout.CENTER);
                                 break;
-                            case "Consultar Vacuna":
-                                frame.addNewPanel(new Views.panels.ConsultVaccine(), BorderLayout.CENTER);
-                                break;
-                            case "Citas":
-                                frame.addNewPanel(new Views.panels.Appointments(frame), BorderLayout.CENTER);
-                                break;
-                            case "Consultar Mascota":
-                                frame.addNewPanel(new Views.panels.ConsultPet(), BorderLayout.CENTER);
+                            case "Agregar cita":
+                                frame.addNewPanel(new Views.panels.NewAppointment(frame,presenter), BorderLayout.CENTER);
                                 break;
                             case "Principal":
-                                frame.addNewPanel(new Views.panels.Body(frame), BorderLayout.CENTER);
+                                frame.addNewPanel(new Views.panels.Body(frame, presenter), BorderLayout.CENTER);
                                 break;
                         }
                     } catch (Exception ex) {

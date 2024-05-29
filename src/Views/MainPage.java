@@ -1,6 +1,7 @@
 package Views;
 
 import Models.GLOBALS;
+import Presenter.Presenter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,14 +9,14 @@ import java.io.IOException;
 
 public class MainPage extends JFrame {
 
-    public MainPage() throws IOException, FontFormatException {
-        initComponents();
+    public MainPage(Presenter presenter) throws IOException, FontFormatException {
+        initComponents(presenter);
         run();
     }
-    private void initComponents() throws IOException, FontFormatException {
+    private void initComponents(Presenter presenter) throws IOException, FontFormatException {
         initBasic();
-        this.add(new Views.panels.Header(this), BorderLayout.NORTH);
-        this.add(new Views.panels.Body(this), BorderLayout.CENTER);
+        this.add(new Views.panels.Header(this,presenter), BorderLayout.NORTH);
+        this.add(new Views.panels.Body(this, presenter), BorderLayout.CENTER);
     }
 
     public void addNewPanel(JPanel panel, String position){

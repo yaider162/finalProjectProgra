@@ -1,6 +1,7 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Pet {
@@ -10,7 +11,7 @@ public class Pet {
     String raze;
     String principalResponsibleName;
 
-    public Pet(String petName, String type, String raze,  List<Vaccine> selectedValuesList) {
+    public Pet(String petName, String ownerName, String ownerId, String specie, String sex, Date date) {
         name = petName;
         vaccinesApplied = new ArrayList<>();
         this.type = type;

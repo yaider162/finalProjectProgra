@@ -5,11 +5,13 @@ import java.util.Date;
 
 public class Vaccine {
     private String type;
-    private LocalDate deadLine;
+    private Date deadLine;
+    private String specie;
 
-    public Vaccine(String type, Date date) {
+    public Vaccine(String type,String specie, Date date) {
         this.type = type;
-        this.deadLine = date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        this.specie = specie;
+        this.deadLine = date;
     }
 
     public String getName() {
@@ -17,6 +19,14 @@ public class Vaccine {
     }
 
     public String getDeadLine() {
+        return deadLine.toString();
+    }
+
+    public String getSpecies() {
+        return specie;
+    }
+
+    public Object getExpirationDate() {
         return deadLine.toString();
     }
 }

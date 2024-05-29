@@ -1,6 +1,7 @@
 package Models;
 
 import java.awt.*;
+import java.time.ZoneId;
 import java.util.Properties;
 
 public class GLOBALS {
@@ -14,5 +15,5 @@ public class GLOBALS {
     public static final Properties properties = new Properties();
     public static Dimension normalButtonSize = new Dimension(200, 100);
 
-    public static String[] headerButtonsText = {"Registrar Mascota", "Registrar Vacuna", "Consultar Vacuna", "Citas", "Consultar Mascota","Principal"};
+    public static String[] headerButtonsText = {"Lista de citas", "Lista de vacunas", "Agregar cita","Principal"};
 }
